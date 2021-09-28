@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>入力ホーム</title>
+    </head>
+    <body>
+        <!-- session implementation -->
+        <h1>{{ name }}</h1>
+        <img src="../images/" . {{ image }}>
+        <form action="update_db.php" method="post">
+        ひとこと<br>
+        <textarea rows="10" cols="50" name="comment"> {{ comment }} </textarea><br>
+        <input type="hidden" name="id" value={{ id }}>
+        <input type="submit" value="Update">
+        </form>
+        <p><a href={{ request.url_for("list") }}>キャンセル</a></p>
+    </body>
+</html>
