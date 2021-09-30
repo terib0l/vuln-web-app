@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Input Page</title>
+    </head>
+    <body>
+        <h1>{{ title }}</h1>
+        <img src=../images/{{ image }} width="300" height="200">
+        <form action="{{  update_db_url }}" method="get">
+          <textarea rows="10" cols="50" name="answer">{{ answer }}</textarea><br>
+          <input type="hidden" name="id" value={{ id }}>
+          <input type="submit" value="Update">
+        </form>
+        <p><a href="{{ list_url  }}">キャンセル</a></p>
+    </body>
+</html>

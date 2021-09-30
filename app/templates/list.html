@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>List</title>
+    </head>
+    <body>
+        <h1>大喜利を考えてみよう！</h1>
+
+        <p><a href="{{ index_url }}">ホームへ</a></p>
+
+        <hr>
+
+        {% if message %}
+        <h2 style="color: #CB4042">... {{ message }} ...</h2>
+        {% endif %}
+
+        {% if objects %}
+        <table border="1"><br>
+            <tr><th>Num</th><th>Title</th><th>Image</th><th>Answer</th></tr><br>
+                {% for object in objects %}
+                <tr>
+                <td>{{ object.id }}</td>
+                <td width="100" style="text-align: center"><a href="{{ answer_url }}?id={{ object.id }}&title={{ object.title }}&image={{ object.image }}&answer={{ object.answer }}">{{ object.title }}</a></td>
+                <!--<td align="center"><img src={{ url_for('images', path="./b.jpg") }} width="300", height="200"></img></td>-->
+                <td align="center"><img src=../images/{{ object.image }} width="300", height="200"></img></td>
+                <td width="400" height="200" style="text-align: center">{{ object.answer|safe }}</td>
+                {% endfor %}
+            </tr>
+        </table>
+        {% else %}
+          <p><strong>... データが見つかりません。 ...</strong></p>
+        {% endif %}
+    </body>
+</html>

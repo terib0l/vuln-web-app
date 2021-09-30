@@ -1,13 +1,13 @@
 # vuln-web-app
 
-Vulnability web application with Django.
+Vulnerable Web Application and Security Assessment Tools.
 
 ## Description
 
 This is web application with vulnability.  
 Let's try security assessment and recode to secure!!
 
-> Because can write high readability and clean code, this web-app is written Django.
+Also, this web application is written by FastAPI. The reason is that it is being able to write high readability and clean code.
 
 ## Setup
 
@@ -20,26 +20,24 @@ $ sh burpsuite_community_linux_[version].sh
 
 #### Install OWASP ZAP
 
-file from here: [Link](https://www.zaproxy.org/download/)  
-[Linux Installer] ***[Download]***
-
 $ sudo apt install default-jre openjdk-11-jre-headless
 
-$ sudo sh burpsuite_community_linux_[version].sh
+$ wget https://github.com/zaproxy/zaproxy/releases/download/v2.10.0/ZAP_2_10_0_unix.sh
+
+$ sudo sh ZAP_2_10_0_unix.sh
 
 #### Setup Web App
 ```
 $ sudo bash install.sh
-
 ```
 
 ## Support Vulnability
 
 * XSS (Stored, Reflected, ...)
 * SQL Injection
-* SRFF
-* ~~OS Injection~~
+* CSRF
 * ~~Directory Traversal~~
+* ~~OS Injection~~
 * ~~Buffer Overflow~~
 
 ## LICENSE
@@ -49,3 +47,4 @@ $ sudo bash install.sh
 ## Quote
 
 * [PAKUTASO](https://www.pakutaso.com/)
+* [Security in Django](https://docs.djangoproject.com/en/3.2/topics/security/)

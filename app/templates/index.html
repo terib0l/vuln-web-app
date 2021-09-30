@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Index</title>
+    </head>
+    <body>
+        <h1>ようこそ！！</h1>
+
+        <form action="{{ init_db_url }}" method="get">
+            <input type="text" name="db_init_file" list="jsons" placeholder="oogiri.json">
+            <input type="submit" value="Initialization">
+        </form>
+        <p><a href="{{ list_url }}?messege=">一覧へ</a></p>
+
+        <hr>
+        <br>
+
+        <div style="width: 400px; border-style: solid; border-color: #8ECAA0;">
+          <a style="font-size: 12pt;"><i>大喜利は日本の文化の一つです。</i></a>
+          <br>
+          <a style="font-size: 12pt;"><i>写真を見てジョークを書いてみましょう。</i></a>
+          <br>
+          <a style="font-size: 12pt;" href="https://www.youtube.com/watch?v=p6jApKn_Bdo"><i>大喜利の例</i></a>
+        </div>
+
+    </body>
+</html>
