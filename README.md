@@ -36,8 +36,8 @@ $ sudo bash install.sh
 * XSS (Stored, Reflected, ...)
 * SQL Injection
 * CSRF
+* OS Injection
 * ~~Directory Traversal~~
-* ~~OS Injection~~
 * ~~Buffer Overflow~~
 
 ## LICENSE

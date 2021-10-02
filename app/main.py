@@ -1,10 +1,11 @@
 from typing import Optional
-from fastapi import FastAPI, Request, Form
+from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from starlette.templating import Jinja2Templates
 
-import json, sqlite3
+import json, sqlite3, os, subprocess
+from subprocess import PIPE
 from module import *
 
 # Env for DB
@@ -22,8 +23,12 @@ templates = Jinja2Templates(directory="templates")
 def index(request: Request):
     init_db_url = request.url_for("init_db")
     list_url = request.url_for("list")
+    confirm_url = request.url_for("confirm")
 
-    return templates.TemplateResponse('index.html', {'request': request, 'init_db_url': str(init_db_url), 'list_url': str(list_url)})
+    path = os.getcwd() + "/files/"
+    files = os.listdir(path)
+
+    return templates.TemplateResponse('index.html', {'request': request, "files": files, 'init_db_url': init_db_url, 'list_url': list_url, "confirm_url": confirm_url})
 
 @app.api_route("/list/", methods=["GET", "POST"], response_class=HTMLResponse)
 def list(request: Request, message: Optional[str] = None):
@@ -64,10 +69,7 @@ def init_db(request: Request, db_init_file: str):
         cur.execute('CREATE TABLE "%s" (id INTEGER PRIMARY KEY, title VARCHAR, answer VARCHAR, image VARCHAR)' % TABLE_NAME)
         
         # Initialize table
-        if db_init_file:
-            path = "files/" + db_init_file
-        else:
-            path = "files/oogiri.json"
+        path = "files/" + db_init_file
         data = json.load(open(path, 'r'))
 
         for value in data.values():
@@ -107,3 +109,15 @@ def update_db(request: Request, id, answer):
         print(str(e))
         url = "{0}?message=Failed to Update the DB".format(url)
         return url
+
+@app.get("/confirm/", response_class=HTMLResponse)
+def confirm(request: Request, file: str):
+    index_url = request.url_for('index')
+    try:
+        path = os.getcwd() + "/files/" + file
+        proc = subprocess.run("cat {}".format(path), shell=True, stdout=PIPE, stderr=PIPE, text=True)
+        stdout = proc.stdout
+
+        return templates.TemplateResponse('confirm.html', {'request': request, 'index_url': index_url, 'stdout': stdout})
+    except:
+        return RedirectResponse(index_url)

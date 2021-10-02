@@ -7,9 +7,18 @@
     <body>
         <h1>ようこそ！！</h1>
 
+        <form action="{{ confirm_url }}" method="get">
+            <input size="28" type="text" name="file" placeholder="下の一覧からファイル名を入力してください">
+            <input type="submit" value="確認する">
+        </form>
         <form action="{{ init_db_url }}" method="get">
-            <input type="text" name="db_init_file" list="jsons" placeholder="oogiri.json">
-            <input type="submit" value="Initialization">
+            <select name="db_init_file">
+                <option value="">--ファイルを一覧から選んでください--</option>
+                {% for file in files %}
+                <option value={{ file }}>{{ file }}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" value="初期化">
         </form>
         <p><a href="{{ list_url }}?messege=">一覧へ</a></p>
 
