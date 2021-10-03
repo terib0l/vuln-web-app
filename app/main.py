@@ -4,7 +4,7 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from starlette.templating import Jinja2Templates
 
-import json, sqlite3, os, subprocess
+import os, re, json, sqlite3, subprocess
 from subprocess import PIPE
 from module import *
 
@@ -113,11 +113,13 @@ def update_db(request: Request, id, answer):
 @app.get("/confirm/", response_class=HTMLResponse)
 def confirm(request: Request, file: str):
     index_url = request.url_for('index')
-    try:
-        path = os.getcwd() + "/files/" + file
-        proc = subprocess.run("cat {}".format(path), shell=True, stdout=PIPE, stderr=PIPE, text=True)
-        stdout = proc.stdout
 
+    result = re.match(".*[&|;].*", file)
+    if result:
+        stdout = "非推奨な文字が含まれています。"
         return templates.TemplateResponse('confirm.html', {'request': request, 'index_url': index_url, 'stdout': stdout})
-    except:
-        return RedirectResponse(index_url)
+    path = os.getcwd() + "/files/" + file
+    proc = subprocess.run("less {}".format(path), shell=True, stdout=PIPE, stderr=PIPE, text=True)
+    stdout = proc.stdout
+
+    return templates.TemplateResponse('confirm.html', {'request': request, 'index_url': index_url, 'stdout': stdout})
